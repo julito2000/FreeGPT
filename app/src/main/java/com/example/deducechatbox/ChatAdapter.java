@@ -12,11 +12,13 @@ import com.example.deducechatbox.MessageEntity;
 import java.util.List;
 import android.view.Gravity;
 import android.widget.FrameLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
 
     private List<MessageEntity> messageList;
+
 
     public ChatAdapter(List<MessageEntity> messageList) {
         this.messageList = messageList;
@@ -33,6 +35,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         MessageEntity message = messageList.get(position);
+        ConstraintLayout.LayoutParams params =
+                (ConstraintLayout.LayoutParams) holder.messageText.getLayoutParams();
         holder.messageText.setText(message.getContent());
         holder.itemView.setAlpha(0f);
         holder.itemView.animate().alpha(1f).setDuration(300).start();
@@ -40,12 +44,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         // Set alignment based on sender
         if ("user".equals(message.getRole())) {
             holder.messageText.setBackgroundResource(R.drawable.user_bubble);
-            params.gravity = Gravity.END;
+            params.startToStart = ConstraintLayout.LayoutParams.UNSET;
+            params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+            //params.gravity = Gravity.END;
         } else {
             holder.messageText.setBackgroundResource(R.drawable.bot_bubble);
-            params.gravity = Gravity.START;
+            params.endToEnd = ConstraintLayout.LayoutParams.UNSET;
+            params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+            //params.gravity = Gravity.START;
+
         }
-        holder.messageText.setLayoutParams(params);
+        //holder.messageText.setLayoutParams(params);
     }
 
     @Override
