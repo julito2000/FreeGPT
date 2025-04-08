@@ -35,6 +35,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         MessageEntity message = messageList.get(position);
+
         ConstraintLayout.LayoutParams params =
                 (ConstraintLayout.LayoutParams) holder.messageText.getLayoutParams();
         holder.messageText.setText(message.getContent());
