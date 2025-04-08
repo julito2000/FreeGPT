@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Message userMessage = new Message("user", inputText);
         OpenAIRequest request = new OpenAIRequest("gpt-3.5-turbo", Arrays.asList(userMessage));
 
-        openAIApi.sendMessage(API_KEY, request).enqueue(new Callback<OpenAIResponse>() {
+        openAIApi.sendMessage(request).enqueue(new Callback<OpenAIResponse>() {
             @Override
             public void onResponse(Call<OpenAIResponse> call, Response<OpenAIResponse> response) {
                 if (response.isSuccessful()) {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     interface OpenAIApi {
         @POST("v1/chat/completions")
-        Call<OpenAIResponse> sendMessage(@Header("Authorization") String auth, @Body OpenAIRequest body);
+        Call<OpenAIResponse> sendMessage(@Body OpenAIRequest body);
     }
 
     class OpenAIRequest {

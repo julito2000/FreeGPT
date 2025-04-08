@@ -40,4 +40,18 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+// Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+// OkHttp para logs de red
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+// Room
+    implementation ("androidx.room:room-runtime:2.5.2")
+    annotationProcessor ("androidx.room:room-compiler:2.5.2")
+
+// RecyclerView
+    implementation ("androidx.recyclerview:recyclerview:1.3.1")
+
 }
