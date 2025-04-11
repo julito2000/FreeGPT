@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //Cliente para acceder a la  API con la  API_KEY Correspondiente
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addInterceptor(chain -> {
@@ -101,7 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendMessage(String inputText, Double temperature, Double topK, int topP, int max_token,double rep_penalty ) {
         Message userMessage = new Message("user", inputText);
-        OpenAIRequest request = new OpenAIRequest("llama3.1:latest", Arrays.asList(userMessage));
+
+        List<Message> fullConversation = new ArrayList<>();
+        for (MessageEntity msg : chatMessages) {
+            fullConversation.add(new Message(msg.getRole(), msg.getContent()));
+        }
+        fullConversation.add(userMessage); // también añadimos el nuevo mensaje
+
+        OpenAIRequest request = new OpenAIRequest("llama3.1:latest", fullConversation);
+        //OpenAIRequest request = new OpenAIRequest("llama3.1:latest", Arrays.asList(userMessage));
 
         openAIApi.sendMessage(request).enqueue(new Callback<OpenAIResponse>() {
             @Override
