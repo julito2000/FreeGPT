@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private List<MessageEntity> chatMessages = new ArrayList<>();
     private OpenAIApi openAIApi;
-    private final String API_KEY = "Bearer TU_API_KEY_AQUI";
+    private final String API_KEY = "Bearer sk-4bb15b7bb4044719aa3c1a1fc34263eb";
     private AppDatabase db;
     private MessageDao messageDao;
 
@@ -63,13 +63,23 @@ public class MainActivity extends AppCompatActivity {
         // Load previous messages
         chatMessages.addAll(messageDao.getAllMessages());
         chatAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(chatMessages.size() - 1);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .addInterceptor(chain -> {
+                    return chain.proceed(
+                            chain.request().newBuilder()
+                                    .addHeader("Authorization", API_KEY)  // Aquí se añade el API Key
+                                    .build()
+                    );
+                })
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.openai.com/")
+                .baseUrl("https://ollama.deducedata.solutions/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -91,14 +101,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendMessage(String inputText, Double temperature, Double topK, int topP, int max_token,double rep_penalty ) {
         Message userMessage = new Message("user", inputText);
-        OpenAIRequest request = new OpenAIRequest("gpt-3.5-turbo", Arrays.asList(userMessage));
+        OpenAIRequest request = new OpenAIRequest("llama3.1:latest", Arrays.asList(userMessage));
 
         openAIApi.sendMessage(request).enqueue(new Callback<OpenAIResponse>() {
             @Override
             public void onResponse(Call<OpenAIResponse> call, Response<OpenAIResponse> response) {
                 if (response.isSuccessful()) {
                     String reply = response.body().choices.get(0).message.content;
-                    addMessageToChat("Bot: ", reply);
+                    addMessageToChat("assistant", reply);
                 } else {
                     addMessageToChat("system", "Error: " + response.code());
                 }
@@ -120,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     interface OpenAIApi {
-        @POST("v1/chat/completions")
+        @POST("api/chat/completions")
         Call<OpenAIResponse> sendMessage(@Body OpenAIRequest body);
     }
 

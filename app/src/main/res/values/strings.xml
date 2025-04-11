@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Deduce chatbox</string>
-    <string name="enviar">Escribe un mensaje...</string>
+    <string name="enviar">Escribe tu consulta...</string>
     <string name="texto">DEDUCE CHATBOT - EN PRUEBAS</string>
 </resources>
