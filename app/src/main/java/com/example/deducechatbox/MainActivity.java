@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.room.Room;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private MessageDao messageDao;
     private Spinner selApi;
     private String model ="";
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter(chatMessages);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(chatAdapter);
+        spinner = findViewById(R.id.progressBar);
 
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "chat-db").allowMainThreadQueries().build();
@@ -141,11 +144,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         OpenAIRequest request = new OpenAIRequest(model, fullConversation);
+        spinner.setVisibility(View.VISIBLE);
         //OpenAIRequest request = new OpenAIRequest("llama3.1:latest", Arrays.asList(userMessage));
 
         openAIApi.sendMessage(request).enqueue(new Callback<OpenAIResponse>() {
             @Override
             public void onResponse(Call<OpenAIResponse> call, Response<OpenAIResponse> response) {
+                spinner.setVisibility(View.GONE); // Ocultar spinner
                 if (response.isSuccessful()) {
                     String reply = response.body().choices.get(0).message.content;
                     addMessageToChat("assistant", reply);
