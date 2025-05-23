@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Free GPT</string>
+    <string name="enviar">Escribe tu consulta...</string>
+    <string name="texto">DEDUCE CHATBOT - EN PRUEBAS</string>
+    <string-array name="api_array">
+        <item>deepseek-r1:32b</item>
+        <item>gemma3:27b</item>
+        <item>llama3.2-vision:latest</item>
+        <item>gemma2:latest</item>
+        <item>llama3.1:latest</item>
+    </string-array>
+</resources>

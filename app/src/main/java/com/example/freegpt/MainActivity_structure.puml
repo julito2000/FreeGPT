@@ -1,0 +1,221 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 10,
+    "backwardDepth": 10,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.example.deducechatbox.MainActivity",
+  "extensionCallbackMethod": "png" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_716080827 { 
+   	label=deducechatbox
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   AppDatabase1362037262[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AppDatabase</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ messageDao(): MessageDao</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+AppDatabase_Impl1362037262[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AppDatabase_Impl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   _messageDao: MessageDao [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clearAllTables()</TD></TR>
+<TR><TD ALIGN="LEFT" ># createInvalidationTracker(): InvalidationTracker</TD></TR>
+<TR><TD ALIGN="LEFT" ># createOpenHelper(configuration: DatabaseConfiguration): SupportSQLiteOpenHelper</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAutoMigrations(autoMigrationSpecsMap: Map&lt;Class&lt;? extends AutoMigrationSpec&gt;, AutoMigrationSpec&gt;): List&lt;Migration&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ messageDao(): MessageDao</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ChatAdapter1362037262[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ChatAdapter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   messageList: List&lt;MessageEntity&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onBindViewHolder(holder: ChatViewHolder, position: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateViewHolder(parent: ViewGroup, viewType: int): ChatViewHolder</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainActivity1362037262[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   API_KEY: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   audio: ImageButton [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   audioFilePath: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   chatAdapter: ChatAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   chatMessages: List&lt;MessageEntity&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   db: AppDatabase [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   messageDao: MessageDao [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   model: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   openAIApi: OpenAIApi [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   recorder: MediaRecorder [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   recyclerView: RecyclerView [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   selApi: Spinner [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sendButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   spinner: ProgressBar [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   userInput: EditText [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- addMessageToChat(role: String, content: String)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >- sendMessage(inputText: String, model: String, temperature: Double, topK: Double, topP: int, max_token: int, rep_penalty: double)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MessageDao_Impl1362037262[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MessageDao_Impl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   __db: RoomDatabase [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __insertionAdapterOfMessageEntity: EntityInsertionAdapter&lt;MessageEntity&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   __preparedStmtOfClearMessages: SharedSQLiteStatement [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ clearMessages()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertMessage(message: MessageEntity)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MessageEntity1362037262[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MessageEntity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   content: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   role: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+AppDatabase1362037262 -> AppDatabase_Impl1362037262[arrowhead=none, arrowtail=empty, dir=both];
+ChatAdapter1362037262 -> MessageEntity1362037262[label="messageList
+[0..*]"];
+MainActivity1362037262 -> AppDatabase1362037262[label="db
+[0..1]"];
+MainActivity1362037262 -> ChatAdapter1362037262[label="chatAdapter
+[0..1]"];
+MainActivity1362037262 -> MessageDao_Impl1362037262[arrowhead=none];
+MainActivity1362037262 -> MessageEntity1362037262[label="chatMessages
+[0..*]"];
+MessageDao_Impl1362037262 -> MessageEntity1362037262[label="__insertionAdapterOfMessageEntity
+[0..1]"];
+    
+}
+@enduml
