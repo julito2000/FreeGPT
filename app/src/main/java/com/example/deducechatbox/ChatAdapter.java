@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.deducechatbox.R;
-import com.example.deducechatbox.MessageEntity;
+
 import java.util.List;
-import android.view.Gravity;
-import android.widget.FrameLayout;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
@@ -47,15 +45,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             holder.messageText.setBackgroundResource(R.drawable.user_bubble);
             params.startToStart = ConstraintLayout.LayoutParams.UNSET;
             params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-            //params.gravity = Gravity.END;
+
         } else {
             holder.messageText.setBackgroundResource(R.drawable.bot_bubble);
             params.endToEnd = ConstraintLayout.LayoutParams.UNSET;
             params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
-            //params.gravity = Gravity.START;
 
         }
-        //holder.messageText.setLayoutParams(params);
+
     }
 
     @Override
